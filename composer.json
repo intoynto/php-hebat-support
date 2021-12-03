@@ -1,0 +1,22 @@
+{
+    "name": "intoy/hebat-support",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Intoy\\HebatSupport\\": "src/Support/"
+        },
+        "files": [
+            "src/helper.collection.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "intoynto",
+            "email": "intoynto@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "vlucas/phpdotenv": "^5.4"
+    }
+}
