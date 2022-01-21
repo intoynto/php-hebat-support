@@ -1028,7 +1028,7 @@ class Collection implements ArrayAccess
      * @param  mixed  $key
      * @return bool
      */
-    public function offsetExists($key)
+    public function offsetExists(mixed $key):bool
     {
         return isset($this->items[$key]);
     }
@@ -1053,7 +1053,7 @@ class Collection implements ArrayAccess
      * @param  mixed  $value
      * @return void
      */
-    public function offsetSet($key, $value)
+    public function offsetSet(mixed $key, mixed $value):void
     {
         if (is_null($key)) {
             $this->items[] = $value;
@@ -1065,10 +1065,10 @@ class Collection implements ArrayAccess
     /**
      * Unset the item at a given offset.
      *
-     * @param  string  $key
+     * @param  mixed  $key
      * @return void
      */
-    public function offsetUnset($key)
+    public function offsetUnset(mixed $key):void
     {
         unset($this->items[$key]);
     }
