@@ -990,6 +990,7 @@ class Collection implements ArrayAccess
      *
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->items);
@@ -1027,7 +1028,8 @@ class Collection implements ArrayAccess
      * @param mixed $key
      * @return bool
      */
-    public function offsetExists($key):bool
+    #[\ReturnTypeWillChange]
+    public function offsetExists($key)
     {
         return isset($this->items[$key])?true:false;
     }
@@ -1039,7 +1041,8 @@ class Collection implements ArrayAccess
      * @param  mixed  $key
      * @return mixed
      */
-    public function offsetGet($key):mixed
+    #[\ReturnTypeWillChange]
+    public function offsetGet($key)
     {
         return $this->items[$key];
     }
@@ -1052,7 +1055,8 @@ class Collection implements ArrayAccess
      * @param  mixed  $value
      * @return void
      */
-    public function offsetSet($key, $value):void
+    #[\ReturnTypeWillChange]
+    public function offsetSet($key, $value)
     {
         if (is_null($key)) {
             $this->items[] = $value;
@@ -1067,7 +1071,8 @@ class Collection implements ArrayAccess
      * @param  mixed  $key
      * @return void
      */
-    public function offsetUnset($key):void
+    #[\ReturnTypeWillChange]
+    public function offsetUnset($key)
     {
         unset($this->items[$key]);
     }
