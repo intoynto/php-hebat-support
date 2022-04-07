@@ -534,4 +534,26 @@ class Str
         return $result;
     }
     
+
+    /**
+     * ========== custom methods ================== 
+     */
+
+    /**
+     * @param mixed $value
+     * @return string 
+     */ 
+    public static function removeSpace($value)
+    {
+        return preg_replace('/\s+/',' ',trim((string)$value));
+    }
+
+    /**
+     * @param mixed $value
+     * @return string 
+     */ 
+    public static function removeDoubleSpace($value)
+    {
+        return preg_replace('/\s+/',' ',trim((string)$value));
+    }
 }

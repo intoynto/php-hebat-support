@@ -64,23 +64,25 @@ class Optional implements ArrayAccess
     /**
      * Determine if an item exists at an offset.
      *
-     * @param  mixed  $key
+     * @param  mixed  $offset
      * @return bool
      */
-    public function offsetExists(mixed $key):bool
+    #[\ReturnTypeWillChange]
+    public function offsetExists($offset)
     {
-        return Arr::accessible($this->value) && Arr::exists($this->value, $key);
+        return Arr::accessible($this->value) && Arr::exists($this->value, $offset);
     }
 
     /**
      * Get an item at a given offset.
      *
-     * @param  mixed  $key
+     * @param  mixed  $offset
      * @return mixed
      */
-    public function offsetGet($key)
+    #[\ReturnTypeWillChange]
+    public function offsetGet($offset)
     {
-        return Arr::get($this->value, $key);
+        return Arr::get($this->value, $offset);
     }
 
     /**
@@ -89,8 +91,9 @@ class Optional implements ArrayAccess
      * @param  mixed  $key
      * @param  mixed  $value
      * @return void
-     */    
-    public function offsetSet(mixed $key, mixed $value):void
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetSet($key, $value)
     {
         if (Arr::accessible($this->value)) {
             $this->value[$key] = $value;
@@ -103,7 +106,8 @@ class Optional implements ArrayAccess
      * @param  string  $key
      * @return void
      */
-    public function offsetUnset(mixed $key):void
+    #[\ReturnTypeWillChange]
+    public function offsetUnset($key)
     {
         if (Arr::accessible($this->value)) {
             unset($this->value[$key]);
