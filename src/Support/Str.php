@@ -545,7 +545,7 @@ class Str
      */ 
     public static function removeSpace($value)
     {
-        return preg_replace('/\s+/',' ',trim((string)$value));
+        return preg_replace('/\s+/','',trim((string)$value));
     }
 
     /**
