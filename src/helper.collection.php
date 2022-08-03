@@ -9,10 +9,12 @@ use Intoy\HebatSupport\HigherOrderTapProxy;
  * Helper collection
  * ================
  * value
+ * is_value
  * env
  * collect
  * data_get
  * data_set
+ * data_unset
  * data_fill
  * head
  * last
@@ -31,6 +33,27 @@ if (!function_exists('value'))
 }
 
 
+if(!function_exists('is_value'))
+{
+    /**
+     * Check variable has valueable
+     *
+     * @param  mixed  $value
+     * @return bool
+     */
+    function is_value($val=null)
+    {
+        if(is_string($val))
+        {
+            return strlen(trim((string)$val))>0;
+        }
+        else {
+            return isset($val);
+        }
+    }
+}
+
+
 if (!function_exists('env')) {
     /**
      * Gets the value of an environment variable.
@@ -42,7 +65,7 @@ if (!function_exists('env')) {
     function env($key, $default = null) { return Env::get($key, $default); }
 }
 
-if (! function_exists('collect')) {
+if (!function_exists('collect')) {
     /**
      * Create a collection from the given value.
      *
@@ -109,7 +132,7 @@ if (!function_exists('data_get')) {
 }
 
 
-if (! function_exists('data_set'))
+if (!function_exists('data_set'))
 {
     /**
      * Set an item on an array or object using dot notation.
@@ -172,8 +195,53 @@ if (! function_exists('data_set'))
     }
 }
 
+if(!function_exists('data_unset')) {
+    /**
+     * Unset attribut any variable array or object
+     *
+     * @param  mixed  $target
+     * @param  string|array  $prop
+     * @param  bool $refill;
+     */
+    function data_unset(&$target, $prop, $refill=true)
+    {
+        if(is_array($prop))
+        {
+            foreach($prop as $key)
+            {
+                data_unset($target,$key);
+            }
+            if(is_array($target) && $refill)
+            {
+                $target=[...$target]; // re-fill
+            }
+        }
+        if(is_array($target))
+        {
+            $keys=array_keys($target);
+            if(is_numeric($prop) && isset($keys[0]) && is_numeric($keys[0]))
+            {
+                unset($target[$prop]);
+            }
+            elseif(($key=array_search($prop,$target))!==false)
+            {
+                unset($target[$key]);
+            }
+        }
+        elseif(is_object($target) && property_exists($target,$prop))
+        {
+            try {
+                unset($target->$prop);
+            }
+            catch(\Exception $e)
+            {
+            }
+        }
+    }
+}
 
-if (! function_exists('data_fill')) {
+
+if (!function_exists('data_fill')) {
     /**
      * Fill in data where it's missing.
      *
