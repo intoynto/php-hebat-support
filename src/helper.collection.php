@@ -219,6 +219,7 @@ if(!function_exists('data_unset')) {
         if(is_array($target))
         {
             $keys=array_keys($target);
+            // check if key by numeric as index
             if(is_numeric($prop) && isset($keys[0]) && is_numeric($keys[0]))
             {
                 unset($target[$prop]);
@@ -226,6 +227,13 @@ if(!function_exists('data_unset')) {
             elseif(($key=array_search($prop,$target))!==false)
             {
                 unset($target[$key]);
+            }
+            elseif(isset($target[$prop]))
+            {
+                unset($target[$prop]);
+            }
+            else {
+                Arr::forget($target,$prop);
             }
         }
         elseif(is_object($target) && property_exists($target,$prop))
