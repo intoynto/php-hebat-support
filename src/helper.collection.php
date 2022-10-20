@@ -16,6 +16,7 @@ use Intoy\HebatSupport\HigherOrderTapProxy;
  * data_set
  * data_unset
  * data_fill
+ * data_build
  * head
  * last
  * tap
@@ -52,7 +53,6 @@ if(!function_exists('is_value'))
         }
     }
 }
-
 
 if (!function_exists('env')) {
     /**
@@ -130,7 +130,6 @@ if (!function_exists('data_get')) {
         return $target;
     }
 }
-
 
 if (!function_exists('data_set'))
 {
@@ -261,6 +260,43 @@ if (!function_exists('data_fill')) {
     function data_fill(&$target, $key, $value)
     {
         return data_set($target, $key, $value, false);
+    }
+}
+
+
+if(!function_exists("data_build"))
+{
+    /**
+     * Build data from arguments by name/value
+     * @param mixed $args for arguments function
+     * @return array
+     */
+    function data_build(...$args)
+    {
+        $arguments=\func_get_args();
+        $count=count($arguments);      
+        if($count<1) { return []; }
+        $trace = debug_backtrace();
+        $file_name=$trace[0]['file'];
+        $file_line=$trace[0]['line'];
+        $file_content=file($file_name);
+        $script_snap=implode("",array_slice($file_content,$file_line-1));
+        $script_snap=preg_replace('/\s+/','',$script_snap);
+        $pattern='/data\_build[\w|\s|\(]+((\$[\w|\s|\,]+)+)+(\)|\s)+(?=\;)/mi';
+        preg_match_all($pattern, $script_snap, $match);
+        $go=$match?$match[0]:[];
+        $go=implode("",$go);
+        preg_match_all("#\\$(\w+)#", $go, $go_match);
+        $var_names=$go_match && is_array($go_match[1])?$go_match[1]:[];
+        $compact=[];
+        foreach($var_names as $key => $name)
+        {
+            if(!is_callable($arguments[$key]))
+            {
+                $compact[$name]=$arguments[$key];
+            }
+        }
+        return $compact;     
     }
 }
 
