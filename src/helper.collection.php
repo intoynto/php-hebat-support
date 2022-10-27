@@ -282,7 +282,7 @@ if(!function_exists("data_build"))
         $file_content=file($file_name);
         $script_snap=implode("",array_slice($file_content,$file_line-1));
         $script_snap=preg_replace('/\s+/','',$script_snap);
-        $pattern='/data\_build[\w|\s|\(]+((\$[\w|\s|\,]+)+)+(\)|\s)+(?=\;)/mi';
+        $pattern='/data\_build[\w|\s|\(]+((\$[\w|\s|\,]+)+)+(\)|\s)+(?=\))/mi';
         preg_match_all($pattern, $script_snap, $match);
         $go=$match?$match[0]:[];
         $go=implode("",$go);
