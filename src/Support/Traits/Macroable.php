@@ -1,6 +1,7 @@
 <?php
+declare (strict_types=1);
 
-namespace Intoy\HebatSupport;
+namespace Intoy\HebatSupport\Traits;
 
 use BadMethodCallException;
 use Closure;
@@ -10,34 +11,31 @@ use ReflectionMethod;
 trait Macroable
 {
     /**
-     * The registered string macros.
-     *
+     * Register string macros
      * @var array
      */
-    protected static $macros = [];
+    protected static $macros=[];
 
     /**
-     * Register a custom macro.
-     *
-     * @param  string  $name
-     * @param  object|callable  $macro
+     * Register custom macro
+     * @param string $name
+     * @param object|callable $macro
      * @return void
      */
-    public static function macro($name, $macro)
+    public static function macro($name,$macro)
     {
-        static::$macros[$name] = $macro;
+        static::$macros[$name]=$macro;
     }
 
     /**
-     * Mix another object into the class.
-     *
-     * @param  object  $mixin
-     * @param  bool  $replace
+     * Mix another object into class
+     * @param object $mixin
+     * @param bool $replace
      * @return void
-     *
+     * 
      * @throws \ReflectionException
      */
-    public static function mixin($mixin, $replace = true)
+    public static function mixin($mixin,$replace=true)
     {
         $methods = (new ReflectionClass($mixin))->getMethods(
             ReflectionMethod::IS_PUBLIC | ReflectionMethod::IS_PROTECTED

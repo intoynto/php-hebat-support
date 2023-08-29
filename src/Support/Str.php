@@ -292,6 +292,18 @@ class Str
 
 
     /**
+     * Get the plural form of an English word.
+     *
+     * @param  string  $value
+     * @param  int  $count
+     * @return string
+     */
+    public static function plural($value, $count = 2)
+    {
+        return Pluralizer::plural($value, $count);
+    }
+
+    /**
      * Generate a more truly "random" alpha-numeric string.
      *
      * @param  int  $length
