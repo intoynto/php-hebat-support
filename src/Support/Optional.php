@@ -5,6 +5,8 @@ namespace Intoy\HebatSupport;
 use ArrayAccess;
 use ArrayObject;
 
+use Intoy\HebatSupport\Traits\Macroable;
+
 class Optional implements ArrayAccess
 {
     use Macroable {
