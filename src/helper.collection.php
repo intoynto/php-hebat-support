@@ -47,7 +47,11 @@ if(!function_exists('is_value'))
     {
         if(is_string($val))
         {
-            return strlen(trim((string)$val))>0;
+          return strlen(trim((string)$val))>0;
+        }
+        elseif(is_array($val))
+        {
+          return count($val)>0 || count(array_values($val))>0 || count(array_keys($val))>0;
         }
         else {
             return isset($val);
